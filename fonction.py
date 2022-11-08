@@ -39,31 +39,12 @@ def salairenet(net):
 
 
 
-alphabet="azertyuiopqsdfghjklmwxcvbn"
-gagner=False
-
-
-def hasard():
-    y = alphabet[random.randint(0,25)]
-    return y
-
-
-while gagner == False:
-    y=hasard()
-    x=input()
-    if x == y:
-        gagner = True
-        print("ganer")
-
-
-def concatrucBarbitruc(str1, str2):
-    return (str1 + "," + str2)
 
 
 
 
 liste=[0,1,1,1,0,1,1,0,1]
-
+print("a")
 def itere(tableau, nb):
     stringue="" #initialise la variable string
     for i in range (len(tableau)): #incrémente i jusqu'a la longueur de la liste
@@ -75,3 +56,4 @@ def itere(tableau, nb):
 
 
 
+print(itere(liste, 0))
