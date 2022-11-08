@@ -14,7 +14,7 @@ def modulo(x , y):
     return(x % y)
 
 def salaires(salaireh , hjo , joan):
-    return((salaireh*hjo*joan)/365/24/60/60)
+    return((salaireh*hjo*joan)/(365*24*60*60))
 
 print(salaires(10,8,300))
 
