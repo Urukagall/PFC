@@ -57,3 +57,17 @@ def itere(tableau, nb):
 
 
 print(itere(liste, 0))
+
+def affiche(aff):
+    print(aff)
+
+listUtilisateur = {
+    "Alexandre" : "motdepasse",
+    "Michel" : "Password",
+    "Toto" : "12345",
+    "JhonDoe" : "azerty"
+}
+
+def login(user,password,utilisateurs):
+    if utilisateurs.get(user) == password:
+        print("ganer")
