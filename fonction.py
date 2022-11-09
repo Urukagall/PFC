@@ -45,10 +45,11 @@ def itere(tableau, nb):
             stringue = stringue + ", " + str(i) #rajoute ", " et la valeur en string de i
     return stringue #returne stringue
 
-
+def concate(texte1,texte2):
+    return str(texte1) + ", " + str(texte2) #concatene les deux chaine de caractère
 
 def affiche(aff):
-    print(aff)
+    print(aff) #affiche la variable aff
 
 listUtilisateur = {
     "Alexandre" : "motdepasse",
@@ -58,16 +59,17 @@ listUtilisateur = {
 }
 
 def login(user,password,utilisateurs):
-    if utilisateurs.get(user) == password:
-        print("ganer")
+    if utilisateurs.get(user) == password: #si le password lier a l'user est le bon
+        return"ganer" #retorune "ganer"
 
 
 def fibonachi (xdebut,lenmax):
-    suite="0, " + str(xdebut)
-    suiteNb=[0,xdebut]
-    for i in range (lenmax):
-        suiteNb.append(suiteNb[-1]+suiteNb[-2])
-        suite += ", " + str(suiteNb[-1]+suiteNb[-2])
+    texte="0, " + str(xdebut) #initialise le texte avec le 0 et le x debut en str
+    suiteNb=[0,xdebut] #initialise la suite avec le 0 et le x debut en int dans une liste
+    for i in range (lenmax): #boucle de la longueur de la longuer max
+        suiteNb.append(suiteNb[-1]+suiteNb[-2]) #ajoute a la fin de la liste de int la valeur qui est l'addition des deux dernière valeur
+        texte += ", " + str(suiteNb[-1]+suiteNb[-2]) #ajoute ", " et la valeur calculer grâce à la liste
+    return texte #retourne le texte complète
 
 def tableau(lenx,leny,liste):
     for x in range (lenx):
@@ -91,9 +93,9 @@ def tableau(lenx,leny,liste):
                 if liste[lenx-1][y] == liste[lenx-2][y] or liste[lenx-1][y] == liste[lenx-1][y-1] or liste[lenx-1][y] == liste[lenx-1][y+1]:
                     return "pedu6"
             elif y != 0 and y != leny-1 and x != 0 and x != lenx-1:
-                if liste[lenx-1][y] == liste[lenx-2][y] or liste[lenx-1][y] == liste[lenx-1][y-1] or liste[lenx-1][y] == liste[lenx-1][y+1]:
-                    return "pedu6"
+                if liste[x][y] == liste[x][y+1] or liste[x][y] == liste[x-1][y] or liste[x][y] == liste[x+1][y] or liste[x][y] == liste[x][y-1] or liste[x][y] == liste[x][y+1]:
+                    return "pedu7"
 
 
 
-print(tableau(3,3,[[1,2,3],[4,5,6],[7,8,9]]))
+print(tableau(4,4,[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]))
