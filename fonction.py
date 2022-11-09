@@ -143,4 +143,7 @@ def truc(tableau,x):
             #alors retourne "l'ennemie gane"
         #ou sinon la variable joueur est égale a la variable ennemie plus 1 (le joueur gagne avec un pierre ou une feuille)
             #alors retourne "le joueur gane"
-        #ou sinon la variable 
+        #ou sinon la variable ennemie est égale à 0 et la variable joueur est égale à 2 (l'ennemie gagne avec une pierre)
+            #alors retourne "l'ennemie gane"
+        #ou sinon la variable joueur est égale à 0 et la variable ennemie est égale à 2 (le joueur gagne avec une pierre)
+            #alors retourne "le joueur gane"
