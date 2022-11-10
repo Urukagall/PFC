@@ -60,7 +60,7 @@ listUtilisateur = {
 
 def login(user,password,utilisateurs):
     if utilisateurs.get(user) == password: #si le password lier a l'user est le bon
-        return"ganer" #retorune "ganer"
+        return"ganer" #retorune "ganer" 
 
 
 def fibonachi (xdebut,lenmax):
@@ -68,7 +68,7 @@ def fibonachi (xdebut,lenmax):
     suiteNb=[0,xdebut] #initialise la suite avec le 0 et le x debut en int dans une liste
     for i in range (lenmax): #incrémente i 
         suiteNb.append(suiteNb[-1]+suiteNb[-2]) #ajoute a la fin de la liste de int la valeur qui est l'addition des deux dernière valeur
-        texte += ", " + str(suiteNb[-1]+suiteNb[-2]) #ajoute ", " et la valeur calculer grâce à la liste
+        concate(texte,str(suiteNb[-1]+suiteNb[-2])) #utilise la fonction concate pour concatener texte et le résultat que l'on veut
     return texte #retourne le texte complète
 
 def tableau(lenx,leny,liste):
@@ -130,6 +130,8 @@ def truc(tableau,x):
 #on admet une fonction random qui renvoie un nombre aléatoire entre un nombres x et un autre y
 #on admet une fonction input qui renvoie ce que le joueur rentre
 
+#Début
+
 #définir la fonction PFC
     #initialise playerWin en booléen et sur False
     #initialise iaWin en booléen et sur False
@@ -147,3 +149,31 @@ def truc(tableau,x):
             #alors retourne "l'ennemie gane"
         #ou sinon la variable joueur est égale à 0 et la variable ennemie est égale à 2 (le joueur gagne avec une pierre)
             #alors retourne "le joueur gane"
+
+#Fin
+
+#Execution de la fonction PFC
+
+
+def UltimatePFC(lenListe):
+    pfcList=["Air","Airplane","Alien","Axe","Baby","Beer","Bicycle","Bird","Blood","Book","Bowl","Brain","Butter","Cage","Camera","Car","Castle","Cat","Chain","Chainsaw","Church","Cloud","Cockroach","Community","Computer","Cross","Cup","Death","Devil","Diamond","Dragon","Duck","Dynamite","Electricity","Fence","Film","Fire","Fish","Gold","Grass","Guitar","Gun","Heart","Helicopter","Home","King","Laser","Law","Lightning","Man","Math","Medusa","Money","Monkey","Moon","Mountain","Noise","Nuke","Paper","Peace","Pit","Planet","Platimum","Poison","Police","Porcupine","Power","Prayer","Prince","Princess","Queen","Quicksand","Rain","Rainbow","Robot","Rock","Satan","School","Scissors","Sky","Snake","Spider","Sponge","Sun","Sword","T.V.","Tank","Toilet","Tornado","Train","Tree","Turnip","U.F.O.","Vampire","Video Game","Vulture","Wall","Water","Whip","Wolf","Woman"]
+    ennemieChoice = random.randint(0,lenListe-1)
+    print("choisi un nombre entre 0 et ",lenListe-1)
+    playerChoice = int(input())
+    x=playerChoice
+    if playerChoice == ennemieChoice:
+        return("egalter")
+    for i in range (0,lenListe//2+1):
+        if i+x >= lenListe:
+             x=0
+        if i+x == ennemieChoice:
+            return("Ennemie gagne avec "+pfcList[ennemieChoice]+" contre "+pfcList[playerChoice])
+    x=playerChoice
+    for i in range (0,lenListe//2+1):
+        if x-i <= 0:
+             x=lenListe-1
+        if x-i == ennemieChoice:
+            return("Joueur gagne avec "+pfcList[playerChoice]+" contre "+pfcList[ennemieChoice])
+
+
+print(UltimatePFC(101))
