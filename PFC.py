@@ -1,3 +1,5 @@
+import random
+
 #on admet une fonction random qui renvoie un nombre aléatoire entre un nombres x et un autre y
 #on admet une fonction input qui renvoie ce que le joueur rentre
 
