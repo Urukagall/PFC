@@ -98,7 +98,7 @@ def tableau(lenx,leny,liste):
 
 
 
-print(tableau(4,4,[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]))
+#print(tableau(4,4,[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]))
 
 
 
@@ -141,9 +141,9 @@ def truc(tableau,x):
         #alors la variable joueur est convertit en integer
         #si la variable ennemie est égale a la variable
             #alors retourne "egalter"
-        #ou sinon la variable ennemie est égale a la variable joueur plus 1 (l'ennemie gagne avec un pierre ou une feuille)
+        #ou sinon la variable ennemie est égale a la variable joueur plus 1 (l'ennemie gagne avec un ciseaux ou une feuille)
             #alors retourne "l'ennemie gane"
-        #ou sinon la variable joueur est égale a la variable ennemie plus 1 (le joueur gagne avec un pierre ou une feuille)
+        #ou sinon la variable joueur est égale a la variable ennemie plus 1 (le joueur gagne avec un ciseaux ou une feuille)
             #alors retourne "le joueur gane"
         #ou sinon la variable ennemie est égale à 0 et la variable joueur est égale à 2 (l'ennemie gagne avec une pierre)
             #alors retourne "l'ennemie gane"
@@ -154,6 +154,44 @@ def truc(tableau,x):
 
 #Execution de la fonction PFC
 
+def convertPFC(choice):
+    if choice == 0:
+        return "pierre"
+    elif choice == 1:
+        return "feuille"
+    elif choice == 2:
+        return "ciseaux"
+
+def PFC(nbPuntos):
+    nbPuntosJoueur=0
+    nbPuntosEnnemie=0
+    while nbPuntosJoueur < nbPuntos and nbPuntosEnnemie < nbPuntos :
+        ennemie = random.randint(0,2)
+        joueur = input("0- pierre\n1- feuille\n2- ciseaux\n")
+        while joueur != "0" and  joueur != "1" and  joueur != "2" :
+            print("dommage réessaie")
+            joueur = input("0- Pierre\n1- feuille\n3- ciseaux\n")
+        joueur = int(joueur)
+        if ennemie == joueur :
+            print("égalter" + " l'ennemie a " + str(nbPuntosEnnemie) + " Puntos" + " le joueur a " + str(nbPuntosJoueur) + " Puntos")
+        elif ennemie == joueur + 1 :
+            nbPuntosEnnemie += 1
+            print("l'ennemie gane avec " + convertPFC(ennemie) + " l'ennemie a " + str(nbPuntosEnnemie) + " Puntos" + " le joueur a " + str(nbPuntosJoueur) + " Puntos")
+        elif joueur == ennemie + 1 :
+            nbPuntosJoueur += 1
+            print("le joueur gane avec " + convertPFC(joueur) + " l'ennemie a " + str(nbPuntosEnnemie) + " Puntos" + " le joueur a " + str(nbPuntosJoueur) + " Puntos")
+        elif ennemie == 0 and joueur == 2 :
+            nbPuntosEnnemie += 1
+            print("l'ennemie gane avec " + convertPFC(ennemie) + " l'ennemie a " + str(nbPuntosEnnemie) + " Puntos" + " le joueur a " + str(nbPuntosJoueur) + " Puntos")
+        elif ennemie == 2 and joueur == 0 :
+            nbPuntosJoueur += 1
+            print("le joueur gane avec " + convertPFC(joueur) + " l'ennemie a " + str(nbPuntosEnnemie) + " Puntos" + " le joueur a " + str(nbPuntosJoueur) + " Puntos")
+    if nbPuntosEnnemie == 3:
+        return "l'ennemie gane"
+    elif nbPuntosJoueur == 3:
+        return "le joueur gane"
+
+print(PFC(3))
 
 def UltimatePFC(lenListe):
     pfcList=["Air","Airplane","Alien","Axe","Baby","Beer","Bicycle","Bird","Blood","Book","Bowl","Brain","Butter","Cage","Camera","Car","Castle","Cat","Chain","Chainsaw","Church","Cloud","Cockroach","Community","Computer","Cross","Cup","Death","Devil","Diamond","Dragon","Duck","Dynamite","Electricity","Fence","Film","Fire","Fish","Gold","Grass","Guitar","Gun","Heart","Helicopter","Home","King","Laser","Law","Lightning","Man","Math","Medusa","Money","Monkey","Moon","Mountain","Noise","Nuke","Paper","Peace","Pit","Planet","Platimum","Poison","Police","Porcupine","Power","Prayer","Prince","Princess","Queen","Quicksand","Rain","Rainbow","Robot","Rock","Satan","School","Scissors","Sky","Snake","Spider","Sponge","Sun","Sword","T.V.","Tank","Toilet","Tornado","Train","Tree","Turnip","U.F.O.","Vampire","Video Game","Vulture","Wall","Water","Whip","Wolf","Woman"]
@@ -176,4 +214,4 @@ def UltimatePFC(lenListe):
             return("Joueur gagne avec "+pfcList[playerChoice]+" contre "+pfcList[ennemieChoice])
 
 
-print(UltimatePFC(101))
+#print(UltimatePFC(101))
