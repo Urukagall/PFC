@@ -1,6 +1,6 @@
-import random
+import random 
 
-def VerifAlign(tableau):
+def VerifAlign(tableau): 
     for x in range (3):
         if tableau[x][0] == "X" and tableau[x][1] == "X" and tableau[x][2] == "X" :
             return 1, 0,True
@@ -69,3 +69,8 @@ def Morpion():
 
 Morpion()
 
+#importation de la bibliothèque random
+
+#definition de la fonction VerifAlign qui prend en paramètre la vaiable tableau
+    #créer une boucle de longueur 3 et qui incremente x de 1 a chaque tour
+        #si la liste tableau  
