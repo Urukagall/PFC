@@ -2,23 +2,23 @@ import random
 
 def VerifAlign(tableau): 
     for x in range (3):
-        if tableau[x][0] == "X" and tableau[x][1] == "X" and tableau[x][2] == "X" :
+        if tableau[x][0] == "X" and tableau[x][1] == "X" and tableau[x][2] == "X" : #vérifie si la colonne d'indice x est remplie de X
             return 1, 0,True
-        elif tableau[x][0] == "O" and tableau[x][1] == "O" and tableau[x][2] == "O" :
+        elif tableau[x][0] == "O" and tableau[x][1] == "O" and tableau[x][2] == "O" : #vérifie si la colonne d'indice x est remplie de O
             return 0, 1,True
-        if tableau[0][x] == "X" and tableau[1][x] == "X" and tableau[2][x] == "X" :
+        if tableau[0][x] == "X" and tableau[1][x] == "X" and tableau[2][x] == "X" : #vérifie si la ligne d'indice x est remplie de X
             return 1, 0,True
-        elif tableau[0][x] == "O" and tableau[1][x] == "O" and tableau[2][x] == "O" :
+        elif tableau[0][x] == "O" and tableau[1][x] == "O" and tableau[2][x] == "O" : #vérifie si la ligne d'indice x est remplie de O
             return 0, 1,True
-    if tableau[0][0] == "X" and tableau[1][1] == "X" and tableau[2][2] == "X" :
+    if tableau[0][0] == "X" and tableau[1][1] == "X" and tableau[2][2] == "X" : #vérifie si la diagonale de haut droite a bas gauche remplie de X
         return 1, 0,True
-    elif tableau[0][0] == "O" and tableau[1][1] == "O" and tableau[2][2] == "O" :
+    elif tableau[0][0] == "O" and tableau[1][1] == "O" and tableau[2][2] == "O" : #vérifie si la diagonale de haut droite a bas gauche remplie de O
         return 0, 1,True
-    if tableau[0][2] == "X" and tableau[1][1] == "X" and tableau[2][0] == "X" :
+    if tableau[0][2] == "X" and tableau[1][1] == "X" and tableau[2][0] == "X" : #vérifie si la diagonale de haut gauche a bas droite remplie de X
         return 1, 0,True
-    elif tableau[0][2] == "O" and tableau[1][1] == "O" and tableau[2][0] == "O" :
+    elif tableau[0][2] == "O" and tableau[1][1] == "O" and tableau[2][0] == "O" : #vérifie si la diagonale de haut gauche a bas droite remplie de O
         return 0, 1,True
-    if tableau[0].count(" ") == 0 and tableau[1].count(" ") == 0 and tableau[2].count(" ") == 0  :
+    if tableau[0].count(" ") == 0 and tableau[1].count(" ") == 0 and tableau[2].count(" ") == 0  : #vérifie si il y a une égaliter
         return 0, 0,True
     return 0,0,False
 
@@ -29,39 +29,39 @@ def Morpion():
     choiceEnnemie = ["",""]
     gameFinish = False
     tableau=[[" "," "," "],[" "," "," "],[" "," "," "]]
-    while nbPuntosEnnemie < 3 and nbPuntosPlayer < 3 :
-        while not(gameFinish):
-            print("",tableau[0],"\n",tableau[1],"\n",tableau[2])
-            choicePlayer[0] = input("Met ta coordonées y\n")
-            choicePlayer[1] = input("Met ta coordonées x\n")
-            while tableau[int(choicePlayer[0])][int(choicePlayer[1])] != " ":
+    while nbPuntosEnnemie < 3 and nbPuntosPlayer < 3 : #while tant que l'un des deux camp n'as pas assez de points (3)
+        while not(gameFinish): #while tant que la partie en cours n'est pas fini
+            print("",tableau[0],"\n",tableau[1],"\n",tableau[2]) #affiche le morpion
+            choicePlayer[0] = input("Met ta coordonées y\n") #demande la coordonnées y au joueur
+            choicePlayer[1] = input("Met ta coordonées x\n") #demande la coordonnées x au joueur
+            while tableau[int(choicePlayer[0])][int(choicePlayer[1])] != " ": #while tant que le choix du joueur n'est pas une case vide
                 choicePlayer[0] = input("Met ta coordonées y\n")
                 choicePlayer[1] = input("Met ta coordonées x\n")
-            tableau[int(choicePlayer[0])][int(choicePlayer[1])] = "O"
+            tableau[int(choicePlayer[0])][int(choicePlayer[1])] = "O" #remplie le tableau avec le choix du joueur
             liste = VerifAlign(tableau)
-            if liste[2] == False :
-                choiceEnnemie[0] = random.randint(0,2)
-                choiceEnnemie[1] = random.randint(0,2)
-                while tableau[int(choiceEnnemie[0])][int(choiceEnnemie[1])] != " ":
+            if liste[2] == False : #si la partie n'est pas finie
+                choiceEnnemie[0] = random.randint(0,2) #nombre aléatoire pour la coordonée y
+                choiceEnnemie[1] = random.randint(0,2) #nombre aléatoire pour la coordonée x
+                while tableau[int(choiceEnnemie[0])][int(choiceEnnemie[1])] != " ": #while tant que le choix de l'ennemie n'est pas une case vide
                     choiceEnnemie[0] = random.randint(0,2)
                     choiceEnnemie[1] = random.randint(0,2)
-                tableau[int(choiceEnnemie[0])][int(choiceEnnemie[1])] = "X"
+                tableau[int(choiceEnnemie[0])][int(choiceEnnemie[1])] = "X" #remplie le tableau avec le choix du l'ennemie
             liste = VerifAlign(tableau)
             nbPuntosEnnemie += liste[0]
             nbPuntosPlayer += liste[1]
             gameFinish = liste[2]
-        print("",tableau[0],"\n",tableau[1],"\n",tableau[2])
-        if liste[0] == 1 :
+        print("",tableau[0],"\n",tableau[1],"\n",tableau[2]) #affiche le morpion
+        if liste[0] == 1 : #si l'ennemie a gagner cette manche
             print("L'ennemie a gagner avec ", nbPuntosEnnemie , " puntos contre ", nbPuntosPlayer , " puntos pour le joueur")
-        elif liste[1] == 1 :
+        elif liste[1] == 1 : #si le joueur a gagner cette manche
             print("Le joueur a gagner avec ", nbPuntosPlayer , " puntos contre ", nbPuntosEnnemie , " puntos pour l'ennemie")
-        else :
+        else : #sinon une égaliter
             print("égalter")
         tableau=[[" "," "," "],[" "," "," "],[" "," "," "]]
         gameFinish = False
-    if nbPuntosEnnemie == 3 :
+    if nbPuntosEnnemie == 3 : #si l'ennemie a gagner la partie
         print("L'ennemie gane")
-    elif nbPuntosPlayer == 3 :
+    elif nbPuntosPlayer == 3 : #si le joueur a gagner la partie
         print("Le joueur gane")
 
 
