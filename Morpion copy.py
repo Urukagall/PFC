@@ -38,52 +38,106 @@ def Assign(choice,board,player):
 
 def IA(board):
     IACanPlay = True
-    nbOColumn0 = 0
-    nbOColumn1 = 0
-    nbOColumn2 = 0
-    nbEmptyColumn0 = 0
-    nbEmptyColumn1 = 0
-    nbEmptyColumn2 = 0
-    EmptyIndexColumn0 = 0
-    EmptyIndexColumn1 = 0
-    EmptyIndexColumn2 = 0
-    columnIndex = 0
+    nbOColumn = [0,0,0]
+    nbXColumn = [0,0,0]
+    nbEmptyColumn = [0,0,0]
+    EmptyIndexColumn = [0,0,0]
+    EmptyIndexDiagonal0 = 0
+    EmptyIndexDiagonal1_1 = 0
+    EmptyIndexDiagonal1_2 = 0
+    nbODiagonal0 = 0
+    nbODiagonal1 = 0
+    nbXDiagonal0 = 0
+    nbXDiagonal1 = 0
+    nbEmptyDiagonal0 = 0
+    nbEmptyDiagonal1 = 0
+    choiceEnnemie = ["",""]
     for i in range (3):
-        if board[i].count("O") == 2 and IACanPlay == True:
+        if board[i].count("X") == 2 and board[i].count(" ") == 1 and IACanPlay == True:
             board[i][board[i].index(" ")] = "X"
             IACanPlay = False
     for i in range (3):
-        if board[i][0] == "O":
-            nbOColumn0 += 1
-        if board[i][1] == "O":
-            nbOColumn1 += 1
-        if board[i][2] == "O":
-            nbOColumn2 += 1
-        if board[i][0] == " ":
-            nbEmptyColumn0 += 1
-            EmptyIndexColumn0 = i
-        if board[i][1] == " ":
-            nbEmptyColumn1 += 1
-            EmptyIndexColumn1= i
-        if board[i][2] == " ":
-            nbEmptyColumn2 += 1
-            EmptyIndexColumn2 = i
-    if nbOColumn0 == 2 and nbEmptyColumn0 == 1 and IACanPlay == True:
-        board[EmptyIndexColumn0][0] = "X" 
+        if board[i].count("O") == 2 and board[i].count(" ") == 1 and IACanPlay == True:
+            board[i][board[i].index(" ")] = "X"
+            IACanPlay = False
+
+    for i in range (3):
+        for j in range (3):
+            if board[i][j] == "O":
+                nbOColumn[j] += 1
+            if board[i][j] == "X":
+                nbXColumn[j] += 1
+            if board[i][j] == " ":
+                nbEmptyColumn[j] += 1
+                EmptyIndexColumn[j] = i
+    for i in range (3):
+        if nbXColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True:
+            board[EmptyIndexColumn[i]][i] = "X" 
+            IACanPlay = False
+    for i in range (3):       
+        if nbOColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True:
+            board[EmptyIndexColumn[i]][i] = "X" 
+            IACanPlay = False
+    diago = 2
+
+    for i in range (3):
+        if board[i][i] == "O":
+            nbODiagonal0 += 1
+        if board[i][i] == "X":
+            nbXDiagonal0 += 1
+        if board[i][i] == " ":
+            nbEmptyDiagonal0 += 1
+            EmptyIndexDiagonal0 = i
+        if board[i][diago] == "O":
+            nbODiagonal1 += 1
+        if board[i][diago] == "X":
+            nbXDiagonal1 += 1
+        if board[i][diago] == " ":
+            nbEmptyDiagonal1 += 1
+            EmptyIndexDiagonal1_1 = i
+            EmptyIndexDiagonal1_2 = diago
+        diago -= 1
+    if nbXDiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True:
+        board[EmptyIndexDiagonal0][EmptyIndexDiagonal0] = "X"
         IACanPlay = False
-    elif nbOColumn1 == 2 and nbEmptyColumn1 == 1 and IACanPlay == True:
-        board[EmptyIndexColumn1][1] = "X"    
+    elif nbXDiagonal1 == 2 and nbEmptyDiagonal1 == 1 and IACanPlay == True:
+        board[EmptyIndexDiagonal1_1][EmptyIndexDiagonal1_2] = "X"
         IACanPlay = False
-    elif nbOColumn2 == 2 and nbEmptyColumn2 == 1 and IACanPlay == True:
-        board[EmptyIndexColumn2][2] = "X" 
+    if nbODiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True:
+        board[EmptyIndexDiagonal0][EmptyIndexDiagonal0] = "X"
         IACanPlay = False
-    print(EmptyIndexColumn0)
+    elif nbODiagonal1 == 2 and nbEmptyDiagonal1 == 1 and IACanPlay == True:
+        board[EmptyIndexDiagonal1_1][EmptyIndexDiagonal1_2] = "X"
+        IACanPlay = False
+    print(IACanPlay)
+    if (board[1][0] == "O" or board[0][1] == "O") and (board[1][0] == " " or board[0][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
+        board[0][0] = "X"
+        IACanPlay = False
+    print(IACanPlay)
+    if (board[1][2] == "O" or board[2][1] == "O") and (board[1][2] == " " or board[2][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
+        board[2][2] = "X"
+        IACanPlay = False
+    print(IACanPlay)
     if board[1][1] == " " and IACanPlay == True:
         board[1][1] = "X"
         IACanPlay = False
-    elif board[1][1] == "O" and IACanPlay == True:
+    elif board[1][1] == "O" and board[0][0] == " " and IACanPlay == True:
         board[0][0] = "X"
         IACanPlay = False
+    elif board[1][1] == "O" and board[2][2] == "O" and board[0][0] == "X" and board[0][2] == " " and IACanPlay == True:
+        board[0][2] = "X"
+        IACanPlay = False
+    if board[0][0] == "O" and board[2][2] == "O" and board[1][1] == "X" and board[1][0] == " " and IACanPlay == True:
+        board[1][0] = "X"
+        IACanPlay = False
+    elif board[0][2] == "O" and board[2][0] == "O" and board[1][1] == "X" and board[1][0] == " " and IACanPlay == True:
+        board[1][0] = "X"
+        IACanPlay = False
+    if IACanPlay == True:
+        choiceEnnemie = random.randint(1,9) #nombre aléatoire pour la coordonée 
+        while Assign(choiceEnnemie,board,"X") == False: #while tant que le choix de l'ennemie n'est pas une case vide
+            choiceEnnemie = random.randint(1,9)
+        IACanPlay == False
         
 
         
@@ -92,7 +146,6 @@ def Morpion():
     nbPuntosEnnemie = 0
     nbPuntosPlayer = 0
     choicePlayer = 0
-    choiceEnnemie = ["",""]
     gameFinish = False
     board=[[" "," "," "],[" "," "," "],[" "," "," "]]
     boardHint=[["7","8","9"],["4","5","6"],["1","2","3"]]
@@ -104,11 +157,9 @@ def Morpion():
                 choicePlayer = int(input("Met ta coordonées comme présent dans le tableau de droite, (la case devra être vide)\n"))
             liste = VerifAlign(board)
             if liste[2] == False : #si la partie n'est pas finie
+                print(board)
                 IA(board)
                 print(board)
-                choiceEnnemie = random.randint(1,9) #nombre aléatoire pour la coordonée 
-                while Assign(choiceEnnemie,board,"X") == False: #while tant que le choix de l'ennemie n'est pas une case vide
-                    choiceEnnemie = random.randint(1,9)
             liste = VerifAlign(board)
             nbPuntosEnnemie += liste[0]
             nbPuntosPlayer += liste[1]
