@@ -109,15 +109,12 @@ def IA(board):
     elif nbODiagonal1 == 2 and nbEmptyDiagonal1 == 1 and IACanPlay == True:
         board[EmptyIndexDiagonal1_1][EmptyIndexDiagonal1_2] = "X"
         IACanPlay = False
-    print(IACanPlay)
     if (board[1][0] == "O" or board[0][1] == "O") and (board[1][0] == " " or board[0][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
         board[0][0] = "X"
         IACanPlay = False
-    print(IACanPlay)
     if (board[1][2] == "O" or board[2][1] == "O") and (board[1][2] == " " or board[2][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
         board[2][2] = "X"
         IACanPlay = False
-    print(IACanPlay)
     if board[1][1] == " " and IACanPlay == True:
         board[1][1] = "X"
         IACanPlay = False
@@ -157,9 +154,7 @@ def Morpion():
                 choicePlayer = int(input("Met ta coordonées comme présent dans le tableau de droite, (la case devra être vide)\n"))
             liste = VerifAlign(board)
             if liste[2] == False : #si la partie n'est pas finie
-                print(board)
                 IA(board)
-                print(board)
             liste = VerifAlign(board)
             nbPuntosEnnemie += liste[0]
             nbPuntosPlayer += liste[1]
