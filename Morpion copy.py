@@ -3,10 +3,11 @@ from tkinter import *
 
 nbPuntosEnnemie = 0
 nbPuntosPlayer = 0
-choicePlayer = 0
+nbPuntos = [0,0]
 gameFinish = False
 board=[[" "," "," "],[" "," "," "],[" "," "," "]]
 boardHint=[["7","8","9"],["4","5","6"],["1","2","3"]]
+
 
 def VerifAlign(board): 
     for x in range (3):
@@ -181,74 +182,107 @@ def Morpion():
         print("Le joueur gane")
 
 def clic(event):
-    print(board)
-    print(nbPuntosEnnemie)
     positionx = event.x
     positiony = event.y
     for i in range(3):
-        if positionx < 200 * i+1 and positiony < 200:
-            choicePlayer = 9-i
-        elif positionx < 200 * i+1 and positiony < 400:
-            choicePlayer = 6-i
-        elif positionx < 200 * i+1 and positiony < 600:
-            choicePlayer = 3-i
+        if positionx < 200 * (i+1) and positiony < 200:
+            choicePlayer = 7+i
+            break
+        elif positionx < 200 * (i+1) and positiony < 400:
+            choicePlayer = 4+i
+            break
+        elif positionx < 200 * (i+1) and positiony < 600:
+            choicePlayer = 1+i
+            break
+    MorpionPlay(choicePlayer,nbPuntos,gameFinish,board)
+
+
+def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
+    IACanPlay = False
     if Assign(choicePlayer,board,"O") == True:
+        IACanPlay = True
+    liste = VerifAlign(board)
+    nbPuntos[0] += liste[0]
+    nbPuntos[1] += liste[1]
+    gameFinish = liste[2]
+    if IACanPlay and gameFinish == False:
         IA(board)
     liste = VerifAlign(board)
-    nbPuntosEnnemie = nbPuntosEnnemie + liste[0]
-    nbPuntosPlayer = nbPuntosEnnemie + liste[1]
+    nbPuntos[0] += liste[0]
+    nbPuntos[1] += liste[1]
     gameFinish = liste[2]
+    Interface(board,False)
     Display(board,boardHint)
     if gameFinish:
         if liste[0] == 1 : #si l'ennemie a gagner cette manche
-            print("L'ennemie a gagner avec ", nbPuntosEnnemie , " puntos contre ", nbPuntosPlayer , " puntos pour le joueur")
+            print("L'ennemie a gagner avec ", nbPuntos[0] , " puntos contre ", nbPuntos[1] , " puntos pour le joueur")
         elif liste[1] == 1 : #si le joueur a gagner cette manche
-            print("Le joueur a gagner avec ", nbPuntosPlayer , " puntos contre ", nbPuntosEnnemie , " puntos pour l'ennemie")
+            print("Le joueur a gagner avec ", nbPuntos[1] , " puntos contre ", nbPuntos[0] , " puntos pour l'ennemie")
         else : #sinon une égaliter
             print("égalter")
-        board=[[" "," "," "],[" "," "," "],[" "," "," "]]
+        for i in range (3):
+            board[i] = [" "," "," "]
         gameFinish = False
-    if nbPuntosEnnemie > 3 and nbPuntosPlayer > 3:
-        if nbPuntosEnnemie == 3 : #si l'ennemie a gagner la partie
+        bouton=Button(screen, text="Fermer", command=screen.quit)
+        bouton.pack
+        Interface(board,True)
+    if nbPuntos[0] == 3 or nbPuntos[1] == 3:
+        if nbPuntos[0] == 3 : #si l'ennemie a gagner la partie
             print("L'ennemie gane")
-        elif nbPuntosPlayer == 3 : #si le joueur a gagner la partie
+            nbPuntos[0]=0
+            nbPuntos[1]=0
+        elif nbPuntos[1] == 3 : #si le joueur a gagner la partie
             print("Le joueur gane")
-
-    
+            nbPuntos[0]=0
+            nbPuntos[1]=0
         
-    
+def Retry():
+    Interface(board,True)
 
 
-def Interface ():
-    screen = Tk()
+def Interface (board,IsEmpty):
+    if not(IsEmpty):
+        for i in range (3):
+            for j in range (3):
+                if board[i][j] == "O":
+                    Position = canvas.create_image(100 + (200*j), 100 + (200*i), image=OImage)
+                if board[i][j] == "X":
+                    Position = canvas.create_image(100 + (200*j), 100 + (200*i), image=XImage)
+    if IsEmpty:
+        for i in range (3):
+            for j in range (3):
+                Position = canvas.create_image(100 + (200*j), 100 + (200*i), image=EmptyImage)
 
-    XImage = PhotoImage(file="X.png")
-    OImage = PhotoImage(file="O.png")
-    EmptyImage = PhotoImage(file="Empty.png")
 
-    canvas = Canvas(screen, width=600, height=600, background='grey')
-    ligneV1 = canvas.create_line(200, 0, 200, 600)
-    ligneV2 = canvas.create_line(400, 0, 400, 600)
-    ligneH1 = canvas.create_line(0, 200, 600, 200)
-    ligneH2 = canvas.create_line(0, 400, 600, 400)
-    Position1 = canvas.create_image(100, 500, image=EmptyImage)
-    Position2 = canvas.create_image(300, 500, image=EmptyImage)
-    Position3 = canvas.create_image(500, 500, image=EmptyImage)
-    Position4 = canvas.create_image(100, 300, image=EmptyImage)
-    Position5 = canvas.create_image(300, 300, image=EmptyImage)
-    Position6 = canvas.create_image(500, 300, image=EmptyImage)
-    Position7 = canvas.create_image(100, 100, image=EmptyImage)
-    Position8 = canvas.create_image(300, 100, image=EmptyImage)
-    Position9 = canvas.create_image(500, 100, image=EmptyImage)
-    screen.bind("<Button-1>",clic)
+screen = Tk()
 
-    
+XImage = PhotoImage(file="X.png")
+OImage = PhotoImage(file="O.png")
+EmptyImage = PhotoImage(file="Empty.png")
 
-    canvas.pack()
+canvas = Canvas(screen, width=600, height=600, background='grey')
+ligneV1 = canvas.create_line(200, 0, 200, 600)
+ligneV2 = canvas.create_line(400, 0, 400, 600)
+ligneH1 = canvas.create_line(0, 200, 600, 200)
+ligneH2 = canvas.create_line(0, 400, 600, 400)
+Position1 = canvas.create_image(100, 500, image=EmptyImage)
+Position2 = canvas.create_image(300, 500, image=EmptyImage)
+Position3 = canvas.create_image(500, 500, image=EmptyImage)
+Position4 = canvas.create_image(100, 300, image=EmptyImage)
+Position5 = canvas.create_image(300, 300, image=EmptyImage)
+Position6 = canvas.create_image(500, 300, image=EmptyImage)
+Position7 = canvas.create_image(100, 100, image=EmptyImage)
+Position8 = canvas.create_image(300, 100, image=EmptyImage)
+Position9 = canvas.create_image(500, 100, image=EmptyImage)
+screen.bind("<Button-1>",clic)
 
-    screen.mainloop()
 
-Interface()
+
+canvas.pack()
+
+screen.mainloop()
+
+#Interface()
 
 Morpion()
 
