@@ -7,7 +7,7 @@ nbPuntos = [0,0]
 gameFinish = False
 board=[[" "," "," "],[" "," "," "],[" "," "," "]]
 boardHint=[["7","8","9"],["4","5","6"],["1","2","3"]]
-
+pause = False
 
 def VerifAlign(board): 
     for x in range (3):
@@ -182,19 +182,20 @@ def Morpion():
         print("Le joueur gane")
 
 def clic(event):
-    positionx = event.x
-    positiony = event.y
-    for i in range(3):
-        if positionx < 200 * (i+1) and positiony < 200:
-            choicePlayer = 7+i
-            break
-        elif positionx < 200 * (i+1) and positiony < 400:
-            choicePlayer = 4+i
-            break
-        elif positionx < 200 * (i+1) and positiony < 600:
-            choicePlayer = 1+i
-            break
-    MorpionPlay(choicePlayer,nbPuntos,gameFinish,board)
+    if not(pause):
+        positionx = event.x
+        positiony = event.y
+        for i in range(3):
+            if positionx < 200 * (i+1) and positiony < 200:
+                choicePlayer = 7+i
+                break
+            elif positionx < 200 * (i+1) and positiony < 400:
+                choicePlayer = 4+i
+                break
+            elif positionx < 200 * (i+1) and positiony < 600:
+                choicePlayer = 1+i
+                break
+        MorpionPlay(choicePlayer,nbPuntos,gameFinish,board)
 
 
 def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
@@ -215,6 +216,7 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
     Display(board,boardHint)
     if gameFinish:
         if liste[0] == 1 : #si l'ennemie a gagner cette manche
+            textFinal="L'ennemie a gagner avec "+ str(nbPuntos[0]) + " puntos contre "+ str(nbPuntos[1]) + " puntos pour le joueur"
             print("L'ennemie a gagner avec ", nbPuntos[0] , " puntos contre ", nbPuntos[1] , " puntos pour le joueur")
         elif liste[1] == 1 : #si le joueur a gagner cette manche
             print("Le joueur a gagner avec ", nbPuntos[1] , " puntos contre ", nbPuntos[0] , " puntos pour l'ennemie")
@@ -223,9 +225,16 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
         for i in range (3):
             board[i] = [" "," "," "]
         gameFinish = False
-        bouton=Button(screen, text="Fermer", command=screen.quit)
-        bouton.pack
-        Interface(board,True)
+        global btnRetry
+        global btnQuit
+        global pause
+        pause = True
+        label = Label(screen, text="Texte par défaut", bg="yellow")
+        label.place(x=150, y=200)
+        btnQuit = Button(screen, text="Quit", bd="10",width=10,height=2, command=screen.destroy)
+        btnQuit.place(x=150, y=350)
+        btnRetry = Button(screen, text="Retry", bd="10",width=10,height=2, command=Retry)
+        btnRetry.place(x=350, y=350)
     if nbPuntos[0] == 3 or nbPuntos[1] == 3:
         if nbPuntos[0] == 3 : #si l'ennemie a gagner la partie
             print("L'ennemie gane")
@@ -238,7 +247,10 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
         
 def Retry():
     Interface(board,True)
-
+    btnRetry.destroy()
+    btnQuit.destroy()
+    global pause
+    pause = False
 
 def Interface (board,IsEmpty):
     if not(IsEmpty):
