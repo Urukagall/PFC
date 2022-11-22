@@ -141,7 +141,6 @@ def IA(board):
         
 
 def Morpion():
-    global choicePlayer
     nbPuntosEnnemie = 0
     nbPuntosPlayer = 0
     choicePlayer = 0

@@ -217,38 +217,47 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
     if gameFinish:
         if liste[0] == 1 : #si l'ennemie a gagner cette manche
             textFinal="L'ennemie a gagner avec "+ str(nbPuntos[0]) + " puntos contre "+ str(nbPuntos[1]) + " puntos pour le joueur"
-            print("L'ennemie a gagner avec ", nbPuntos[0] , " puntos contre ", nbPuntos[1] , " puntos pour le joueur")
+            print(textFinal)
         elif liste[1] == 1 : #si le joueur a gagner cette manche
-            print("Le joueur a gagner avec ", nbPuntos[1] , " puntos contre ", nbPuntos[0] , " puntos pour l'ennemie")
+            textFinal="Le joueur a gagner avec "+ str(nbPuntos[1]) + " puntos contre "+ str(nbPuntos[0]) + " puntos pour l'ennemie"
+            print(textFinal)
         else : #sinon une égaliter
-            print("égalter")
+            textFinal="égalter le joueur a "+ str(nbPuntos[1]) + " puntos contre "+ str(nbPuntos[0]) + " puntos pour l'ennemie"
+            print(textFinal)
         for i in range (3):
             board[i] = [" "," "," "]
         gameFinish = False
         global btnRetry
         global btnQuit
         global pause
+        global textScore
         pause = True
-        label = Label(screen, text="Texte par défaut", bg="yellow")
-        label.place(x=150, y=200)
+        textScore = Label(screen, text=textFinal, bg="yellow")
+        textScore.place(x=150, y=200)
         btnQuit = Button(screen, text="Quit", bd="10",width=10,height=2, command=screen.destroy)
         btnQuit.place(x=150, y=350)
         btnRetry = Button(screen, text="Retry", bd="10",width=10,height=2, command=Retry)
         btnRetry.place(x=350, y=350)
     if nbPuntos[0] == 3 or nbPuntos[1] == 3:
         if nbPuntos[0] == 3 : #si l'ennemie a gagner la partie
-            print("L'ennemie gane")
+            textFinal = "L'ennemie gane la partie avec "+ str(nbPuntos[0]) + " puntos"
+            print(textFinal)
             nbPuntos[0]=0
             nbPuntos[1]=0
         elif nbPuntos[1] == 3 : #si le joueur a gagner la partie
-            print("Le joueur gane")
+            textFinal = "Le joueur gane la partie avec "+ str(nbPuntos[1]) + " puntos"
+            print(textFinal)
             nbPuntos[0]=0
             nbPuntos[1]=0
+        textScore.destroy()
+        textScore = Label(screen, text=textFinal, bg="yellow")
+        textScore.place(x=150, y=200)
         
 def Retry():
     Interface(board,True)
     btnRetry.destroy()
     btnQuit.destroy()
+    textScore.destroy()
     global pause
     pause = False
 
