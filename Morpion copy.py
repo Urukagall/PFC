@@ -8,6 +8,8 @@ gameFinish = False
 board=[[" "," "," "],[" "," "," "],[" "," "," "]]
 boardHint=[["7","8","9"],["4","5","6"],["1","2","3"]]
 pause = True
+choosingSkin = False
+destroy = True
 
 def VerifAlign(board): 
     for x in range (3):
@@ -183,6 +185,7 @@ def Morpion():
 
 def clic(event):
     if not(pause):
+        print("a")
         positionx = event.x
         positiony = event.y
         for i in range(3):
@@ -195,7 +198,11 @@ def clic(event):
             elif positionx < 200 * (i+1) and positiony < 600:
                 choicePlayer = 1+i
                 break
-        MorpionPlay(choicePlayer,nbPuntos,gameFinish,board)
+        print(choosingSkin)
+        if choosingSkin:
+            SkinSelect(choicePlayer)
+        else:
+            MorpionPlay(choicePlayer,nbPuntos,gameFinish,board)
 
 
 def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
@@ -276,6 +283,11 @@ def Play():
 
 def InterfaceSkin():
     Interface(board,True)
+    global choosingSkin
+    global textSkin
+    global pause
+    pause = False
+    choosingSkin = True
     btnPlay.destroy()
     btnQuit2.destroy()
     textMenu.destroy()
@@ -289,15 +301,53 @@ def InterfaceSkin():
     Skin = canvas.create_image(100, 500, image=RamonMatrice)
     Skin = canvas.create_image(300, 500, image=DiscordLightThemeGrill)
     Skin = canvas.create_image(500, 500, image=SvastikaNotCGame)
-    textScore = Label(screen, text="Chosis un skin en cliquant dessus", bg="yellow")
-    textScore.place(x=200, y=175)
+    textSkin = Label(screen, text="Chosis un skin en cliquant dessus", bg="yellow")
+    textSkin.place(x=200, y=175)
+
+def SkinSelect(choicePlayer):
+    global OImage
+    global choosingSkin
+    global destroy
+    choosingSkin = False
+    if choicePlayer == 1:
+        OImage = PhotoImage(file="Image/ramon_matrice.png")
+    elif choicePlayer == 2:
+        OImage = PhotoImage(file="Image/discord_light_theme_grill.png")
+    elif choicePlayer == 3:
+        OImage = PhotoImage(file="Image/svastika_not_C_game.png")
+    elif choicePlayer == 4:
+        OImage = PhotoImage(file="Image/amogus_fransu_inferior_Porutogaru.png")
+    elif choicePlayer == 5:
+        OImage = PhotoImage(file="Image/amogus_Porutogaru_muito_sus.png")
+    elif choicePlayer == 6:
+        OImage = PhotoImage(file="Image/unidrill_mangle.png")
+    elif choicePlayer == 7:
+        OImage = PhotoImage(file="Image/amogus_original.png")
+    elif choicePlayer == 8:
+        OImage = PhotoImage(file="Image/amogus_chinese_mexicano.png")
+    elif choicePlayer == 9:
+        OImage = PhotoImage(file="Image/amogus_nword_racist_white.png")
+    destroy = False
+    InterfaceMenu()
+    
+    
+
 
 def InterfaceMenu():
     Interface(board,True)
-    btnQuit.destroy()
-    btnMenu.destroy()
-    btnRetry.destroy()
-    textScore.destroy()
+    global destroy
+    if destroy:
+        btnQuit.destroy()
+        btnMenu.destroy()
+        btnRetry.destroy()
+        textScore.destroy()
+    else:
+        destroy = True
+        textSkin.destroy()
+        ligneV1 = canvas.create_line(200, 0, 200, 600)
+        ligneV2 = canvas.create_line(400, 0, 400, 600)
+        ligneH1 = canvas.create_line(0, 200, 600, 200)
+        ligneH2 = canvas.create_line(0, 400, 600, 400)
     global btnPlay
     global btnQuit2
     global btnSkin
