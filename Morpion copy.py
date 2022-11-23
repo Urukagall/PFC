@@ -7,7 +7,7 @@ nbPuntos = [0,0]
 gameFinish = False
 board=[[" "," "," "],[" "," "," "],[" "," "," "]]
 boardHint=[["7","8","9"],["4","5","6"],["1","2","3"]]
-pause = False
+pause = True
 
 def VerifAlign(board): 
     for x in range (3):
@@ -228,6 +228,7 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
             board[i] = [" "," "," "]
         gameFinish = False
         global btnRetry
+        global btnMenu
         global btnQuit
         global pause
         global textScore
@@ -238,6 +239,8 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
         btnQuit.place(x=150, y=350)
         btnRetry = Button(screen, text="Retry", bd="10",width=10,height=2, command=Retry)
         btnRetry.place(x=350, y=350)
+        btnMenu = Button(screen, text="Menu", bd="10",width=10,height=2, command=InterfaceMenu)
+        btnMenu.place(x=250, y=450)
     if nbPuntos[0] == 3 or nbPuntos[1] == 3:
         if nbPuntos[0] == 3 : #si l'ennemie a gagner la partie
             textFinal = "L'ennemie gane la partie avec "+ str(nbPuntos[0]) + " puntos"
@@ -256,10 +259,59 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
 def Retry():
     Interface(board,True)
     btnRetry.destroy()
+    btnMenu.destroy()
     btnQuit.destroy()
     textScore.destroy()
     global pause
     pause = False
+
+def Play():
+    Interface(board,True)
+    btnPlay.destroy()
+    btnSkin.destroy()
+    btnQuit2.destroy()
+    textMenu.destroy()
+    global pause
+    pause = False
+
+def InterfaceSkin():
+    Interface(board,True)
+    btnPlay.destroy()
+    btnQuit2.destroy()
+    textMenu.destroy()
+    btnSkin.destroy()
+    Skin = canvas.create_image(100, 100, image=AmogusOriginal)
+    Skin = canvas.create_image(300, 100, image=AmogusChineseMexicano)
+    Skin = canvas.create_image(500, 100, image=AmogusNwordRacistWhite)
+    Skin = canvas.create_image(100, 300, image=AmogusFransuInferiorPorutogaru)
+    Skin = canvas.create_image(300, 300, image=AmogusPorutogaruMuitoSus)
+    Skin = canvas.create_image(500, 300, image=UnidrillMangle)
+    Skin = canvas.create_image(100, 500, image=RamonMatrice)
+    Skin = canvas.create_image(300, 500, image=DiscordLightThemeGrill)
+    Skin = canvas.create_image(500, 500, image=SvastikaNotCGame)
+    textScore = Label(screen, text="Chosis un skin en cliquant dessus", bg="yellow")
+    textScore.place(x=200, y=175)
+
+def InterfaceMenu():
+    Interface(board,True)
+    btnQuit.destroy()
+    btnMenu.destroy()
+    btnRetry.destroy()
+    textScore.destroy()
+    global btnPlay
+    global btnQuit2
+    global btnSkin
+    global pause
+    global textMenu
+    pause = True
+    textMenu = Label(screen, text="Bienvenue sur ULTIMATE MORTPITON, dans ce Mortpiton \nvous pouvez changer de Skin et 'essayer' de gagner.\n\nIl y a aussi un skin Shiny, Bonne chance.", bg="yellow")
+    textMenu.place(x=150, y=200)
+    btnQuit2 = Button(screen, text="Quit", bd="10",width=10,height=2, command=screen.destroy)
+    btnQuit2.place(x=150, y=350)
+    btnPlay = Button(screen, text="Play", bd="10",width=10,height=2, command=Play)
+    btnPlay.place(x=350, y=350) 
+    btnSkin = Button(screen, text="Skin", bd="10",width=10,height=2, command=InterfaceSkin)
+    btnSkin.place(x=250, y=450)
 
 def Interface (board,IsEmpty):
     if not(IsEmpty):
@@ -277,9 +329,18 @@ def Interface (board,IsEmpty):
 
 screen = Tk()
 
-XImage = PhotoImage(file="X.png")
-OImage = PhotoImage(file="O.png")
-EmptyImage = PhotoImage(file="Empty.png")
+XImage = PhotoImage(file="Image/X.png")
+OImage = PhotoImage(file="Image/O.png")
+EmptyImage = PhotoImage(file="Image/Empty.png")
+AmogusOriginal = PhotoImage(file="Image/amogus_original.png")
+AmogusChineseMexicano = PhotoImage(file="Image/amogus_chinese_mexicano.png")
+AmogusNwordRacistWhite = PhotoImage(file="Image/amogus_nword_racist_white.png")
+AmogusFransuInferiorPorutogaru = PhotoImage(file="Image/amogus_fransu_inferior_Porutogaru.png")
+AmogusPorutogaruMuitoSus = PhotoImage(file="Image/amogus_Porutogaru_muito_sus.png")
+UnidrillMangle = PhotoImage(file="Image/unidrill_mangle.png")
+RamonMatrice = PhotoImage(file="Image/ramon_matrice.png")
+DiscordLightThemeGrill = PhotoImage(file="Image/discord_light_theme_grill.png")
+SvastikaNotCGame = PhotoImage(file="Image/svastika_not_C_game.png")
 
 canvas = Canvas(screen, width=600, height=600, background='grey')
 ligneV1 = canvas.create_line(200, 0, 200, 600)
@@ -296,6 +357,15 @@ Position7 = canvas.create_image(100, 100, image=EmptyImage)
 Position8 = canvas.create_image(300, 100, image=EmptyImage)
 Position9 = canvas.create_image(500, 100, image=EmptyImage)
 screen.bind("<Button-1>",clic)
+
+textMenu = Label(screen, text="Bienvenue sur ULTIMATE MORTPITON, dans ce Mortpiton \nvous pouvez changer de Skin et 'essayer' de gagner.\n\nIl y a aussi un skin Shiny, Bonne chance.", bg="yellow")
+textMenu.place(x=150, y=200)
+btnQuit2 = Button(screen, text="Quit", bd="10",width=10,height=2, command=screen.destroy)
+btnQuit2.place(x=150, y=350)
+btnPlay = Button(screen, text="Play", bd="10",width=10,height=2, command=Play)
+btnPlay.place(x=350, y=350) 
+btnSkin = Button(screen, text="Skin", bd="10",width=10,height=2, command=InterfaceSkin)
+btnSkin.place(x=250, y=450)
 
 
 
