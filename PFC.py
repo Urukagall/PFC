@@ -1,47 +1,5 @@
 import random
 
-#on admet une fonction random qui renvoie un nombre aléatoire entre un nombres x et un autre y
-#on admet une fonction input qui renvoie ce que le joueur rentre
-
-#Début
-
-#definir la fonction convertPFC qui prend en argument le choix
-    #si le choix est égale a 0
-        #alors retourne "pierre"
-    # ou sinon le choix est égale a 1
-        #alors retourne "feuille"
-    #ou sinon le choix est égale a 2
-        #alors retourne "ciseaux"
-
-#définir la fonction PFC aui prend en argument le nombre de puntos pour gagner
-    #initialise la variable nbPuntosPlayer a 0
-    #initialise la variable nbPuntosEnnemie a 0
-    #tant que nbPuntosPlayer est inférieur a nbPuntos et nbPuntosEnnemie est inférieur a nbPuntos
-        #initialise la variable ennemie avec la valeur retourner par l'éxecution de la fonction random qui prendra en argument x=0 et y=2
-        #initialise la variable player avec le retour de l'éxecution de la fonction input
-        #tant que player n'est pas égale a "0" "1" ou "2"
-            #alors affiche "dommage réessaie" 
-            #la variable player est égale au retour de l'éxecution de la fonction input
-        #alors la variable joueur est convertit en integer
-        #si la variable ennemie est égale a celle de joueur
-            #alors affiche "égalter" et le nombre de puntos de chacun
-        #ou sinon la variable ennemie est égale a la variable joueur plus 1 (l'ennemie gagne avec un ciseaux ou une feuille)
-            #alors affiche "l'ennemie gane" et le nombre de puntos de chacun
-        #ou sinon la variable joueur est égale a la variable ennemie plus 1 (le joueur gagne avec un ciseaux ou une feuille)
-            #alors affiche "le joueur gane" et le nombre de puntos de chacun
-        #ou sinon la variable ennemie est égale à 0 et la variable joueur est égale à 2 (l'ennemie gagne avec une pierre)
-            #alors affiche "l'ennemie gane" et le nombre de puntos de chacun
-        #ou sinon la variable joueur est égale à 0 et la variable ennemie est égale à 2 (le joueur gagne avec une pierre)
-            #alors affiche "le joueur gane" et le nombre de puntos de chacun
-    #si la variable nbPuntosEnnemie est égale a 3
-        #alors affiche "l'ennemie gane"
-    #ou sinon la variable nbPuntosPlayer est égale a 3
-        #alors affiche "le joueur gane"
-
-#Fin
-
-#Execution de la fonction PFC
-
 def convertPFC(choice):
     if choice == 0:
         return "pierre"
