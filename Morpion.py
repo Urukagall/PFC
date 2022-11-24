@@ -27,11 +27,11 @@ def Display(board,boardHint):
     print("",board[0],"          ",boardHint[0],"\n",board[1],"          ",boardHint[1],"\n",board[2],"          ",boardHint[2]) #affiche le morpion
 
 def Assign(choice,board,player):
-    if choice <= 3 and choice > 0 and board[2][int(choice-1)] == " ": 
+    if choice <= 3 and choice > 0 and board[2][int(choice-1)] == " ": #complète la première ligne par le symbole correspondant
         board[2][int(choice-1)] = player
-    elif choice <= 6 and choice > 3 and board[1][int(choice-4)] == " ":
+    elif choice <= 6 and choice > 3 and board[1][int(choice-4)] == " ": #complète la deuxième ligne par le symbole correspondant
         board[1][int(choice-4)] = player
-    elif choice <= 9 and choice > 6 and board[0][int(choice-7)] == " ":
+    elif choice <= 9 and choice > 6 and board[0][int(choice-7)] == " ": #complète la troisième ligne par le symbole correspondant
         board[0][int(choice-7)] = player
     else:
         return False
@@ -54,11 +54,11 @@ def IA(board):
     nbEmptyDiagonal1 = 0
     choiceEnnemie = ["",""]
     for i in range (3):
-        if board[i].count("X") == 2 and board[i].count(" ") == 1 and IACanPlay == True:
+        if board[i].count("X") == 2 and board[i].count(" ") == 1 and IACanPlay == True: #Vérifie si l'IA peut gagner en ligne horizontale
             board[i][board[i].index(" ")] = "X"
             IACanPlay = False
     for i in range (3):
-        if board[i].count("O") == 2 and board[i].count(" ") == 1 and IACanPlay == True:
+        if board[i].count("O") == 2 and board[i].count(" ") == 1 and IACanPlay == True: #vérifie si l'IA peut bloquer le joueur en ligne horizontale
             board[i][board[i].index(" ")] = "X"
             IACanPlay = False
 
@@ -72,11 +72,11 @@ def IA(board):
                 nbEmptyColumn[j] += 1
                 EmptyIndexColumn[j] = i
     for i in range (3):
-        if nbXColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True:
+        if nbXColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True: #Vérifie si l'IA peut gagner en ligne verticale
             board[EmptyIndexColumn[i]][i] = "X" 
             IACanPlay = False
     for i in range (3):       
-        if nbOColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True:
+        if nbOColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True: #vérifie si l'IA peut bloquer le joueur en ligne verticale
             board[EmptyIndexColumn[i]][i] = "X" 
             IACanPlay = False
     diago = 2
@@ -98,22 +98,23 @@ def IA(board):
             EmptyIndexDiagonal1_1 = i
             EmptyIndexDiagonal1_2 = diago
         diago -= 1
-    if nbXDiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True:
+    if nbXDiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True: #Vérifie si l'IA peut gagner en ligne diagonale
         board[EmptyIndexDiagonal0][EmptyIndexDiagonal0] = "X"
         IACanPlay = False
     elif nbXDiagonal1 == 2 and nbEmptyDiagonal1 == 1 and IACanPlay == True:
         board[EmptyIndexDiagonal1_1][EmptyIndexDiagonal1_2] = "X"
         IACanPlay = False
-    if nbODiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True:
+    if nbODiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True: #vérifie si l'IA peut bloquer le joueur en ligne verticale
         board[EmptyIndexDiagonal0][EmptyIndexDiagonal0] = "X"
         IACanPlay = False
     elif nbODiagonal1 == 2 and nbEmptyDiagonal1 == 1 and IACanPlay == True:
         board[EmptyIndexDiagonal1_1][EmptyIndexDiagonal1_2] = "X"
         IACanPlay = False
-    if (board[1][0] == "O" or board[0][1] == "O") and (board[1][0] == " " or board[0][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
+    #Quelques vérification pour que le joueur ne puisse pas brain l'IA
+    if (board[1][0] == "O" or board[0][1] == "O") and (board[1][0] == " " or board[0][1] == " ") and board[0][0] == " " and (board[2][2] == " " or board[2][2] == "O") and IACanPlay == True:
         board[0][0] = "X"
         IACanPlay = False
-    if (board[1][2] == "O" or board[2][1] == "O") and (board[1][2] == " " or board[2][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
+    if (board[1][2] == "O" or board[2][1] == "O") and (board[1][2] == " " or board[2][1] == " ") and board[2][2] == " " and (board[0][0] == " " or board[0][0] == "O") and IACanPlay == True:
         board[2][2] = "X"
         IACanPlay = False
     if board[1][1] == " " and IACanPlay == True:

@@ -12,6 +12,10 @@ choosingSkin = False
 destroy = True
 
 def VerifAlign(board): 
+    if board[0][0] == "X" and board[0][1] == "O" and board[0][2] == "O" and board[1][0] == "O" and board[1][1] == "X" and board[1][2] == "X" and board[2][0] == "X" and board[2][1] == "O" and board[2][2] == "O":
+        global OImage
+        OImage = PhotoImage(file="Image/WAKANDA_CHIKEN.png")
+        print("a")
     for x in range (3):
         if board[x][0] == "X" and board[x][1] == "X" and board[x][2] == "X" : #vérifie si la colonne d'indice x est remplie de X
             return 1, 0,True
@@ -37,11 +41,11 @@ def Display(board,boardHint):
     print("",board[0],"          ",boardHint[0],"\n",board[1],"          ",boardHint[1],"\n",board[2],"          ",boardHint[2]) #affiche le morpion
 
 def Assign(choice,board,player):
-    if choice <= 3 and choice > 0 and board[2][int(choice-1)] == " ": 
+    if choice <= 3 and choice > 0 and board[2][int(choice-1)] == " ": #complète la première ligne par le symbole correspondant
         board[2][int(choice-1)] = player
-    elif choice <= 6 and choice > 3 and board[1][int(choice-4)] == " ":
+    elif choice <= 6 and choice > 3 and board[1][int(choice-4)] == " ": #complète la deuxième ligne par le symbole correspondant
         board[1][int(choice-4)] = player
-    elif choice <= 9 and choice > 6 and board[0][int(choice-7)] == " ":
+    elif choice <= 9 and choice > 6 and board[0][int(choice-7)] == " ": #complète la troisième ligne par le symbole correspondant
         board[0][int(choice-7)] = player
     else:
         return False
@@ -64,11 +68,11 @@ def IA(board):
     nbEmptyDiagonal1 = 0
     choiceEnnemie = ["",""]
     for i in range (3):
-        if board[i].count("X") == 2 and board[i].count(" ") == 1 and IACanPlay == True:
+        if board[i].count("X") == 2 and board[i].count(" ") == 1 and IACanPlay == True: #Vérifie si l'IA peut gagner en ligne horizontale
             board[i][board[i].index(" ")] = "X"
             IACanPlay = False
     for i in range (3):
-        if board[i].count("O") == 2 and board[i].count(" ") == 1 and IACanPlay == True:
+        if board[i].count("O") == 2 and board[i].count(" ") == 1 and IACanPlay == True: #vérifie si l'IA peut bloquer le joueur en ligne horizontale
             board[i][board[i].index(" ")] = "X"
             IACanPlay = False
 
@@ -82,11 +86,11 @@ def IA(board):
                 nbEmptyColumn[j] += 1
                 EmptyIndexColumn[j] = i
     for i in range (3):
-        if nbXColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True:
+        if nbXColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True: #Vérifie si l'IA peut gagner en ligne verticale
             board[EmptyIndexColumn[i]][i] = "X" 
             IACanPlay = False
     for i in range (3):       
-        if nbOColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True:
+        if nbOColumn[i] == 2 and nbEmptyColumn[i] == 1 and IACanPlay == True: #vérifie si l'IA peut bloquer le joueur en ligne verticale
             board[EmptyIndexColumn[i]][i] = "X" 
             IACanPlay = False
     diago = 2
@@ -108,22 +112,23 @@ def IA(board):
             EmptyIndexDiagonal1_1 = i
             EmptyIndexDiagonal1_2 = diago
         diago -= 1
-    if nbXDiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True:
+    if nbXDiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True: #Vérifie si l'IA peut gagner en ligne diagonale
         board[EmptyIndexDiagonal0][EmptyIndexDiagonal0] = "X"
         IACanPlay = False
     elif nbXDiagonal1 == 2 and nbEmptyDiagonal1 == 1 and IACanPlay == True:
         board[EmptyIndexDiagonal1_1][EmptyIndexDiagonal1_2] = "X"
         IACanPlay = False
-    if nbODiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True:
+    if nbODiagonal0 == 2 and nbEmptyDiagonal0 == 1 and IACanPlay == True: #vérifie si l'IA peut bloquer le joueur en ligne verticale
         board[EmptyIndexDiagonal0][EmptyIndexDiagonal0] = "X"
         IACanPlay = False
     elif nbODiagonal1 == 2 and nbEmptyDiagonal1 == 1 and IACanPlay == True:
         board[EmptyIndexDiagonal1_1][EmptyIndexDiagonal1_2] = "X"
         IACanPlay = False
-    if (board[1][0] == "O" or board[0][1] == "O") and (board[1][0] == " " or board[0][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
+    #Quelques vérification pour que le joueur ne puisse pas brain l'IA
+    if (board[1][0] == "O" or board[0][1] == "O") and (board[1][0] == " " or board[0][1] == " ") and board[0][0] == " " and (board[2][2] == " " or board[2][2] == "O") and IACanPlay == True:
         board[0][0] = "X"
         IACanPlay = False
-    if (board[1][2] == "O" or board[2][1] == "O") and (board[1][2] == " " or board[2][1] == " ") and board[0][0] == " " and board[2][2] == " " and IACanPlay == True:
+    if (board[1][2] == "O" or board[2][1] == "O") and (board[1][2] == " " or board[2][1] == " ") and board[2][2] == " " and (board[0][0] == " " or board[0][0] == "O") and IACanPlay == True:
         board[2][2] = "X"
         IACanPlay = False
     if board[1][1] == " " and IACanPlay == True:
@@ -181,11 +186,10 @@ def Morpion():
     if nbPuntosEnnemie == 3 : #si l'ennemie a gagner la partie
         print("L'ennemie gane")
     elif nbPuntosPlayer == 3 : #si le joueur a gagner la partie
-        print("Le joueur gane")
+        print("Le joueur gane")    
 
 def clic(event):
     if not(pause):
-        print("a")
         positionx = event.x
         positiony = event.y
         for i in range(3):
@@ -210,8 +214,6 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
     if Assign(choicePlayer,board,"O") == True:
         IACanPlay = True
     liste = VerifAlign(board)
-    nbPuntos[0] += liste[0]
-    nbPuntos[1] += liste[1]
     gameFinish = liste[2]
     if IACanPlay and gameFinish == False:
         IA(board)
@@ -249,12 +251,12 @@ def MorpionPlay(choicePlayer,nbPuntos,gameFinish,board):
         btnMenu = Button(screen, text="Menu", bd="10",width=10,height=2, command=InterfaceMenu)
         btnMenu.place(x=250, y=450)
     if nbPuntos[0] == 3 or nbPuntos[1] == 3:
-        if nbPuntos[0] == 3 : #si l'ennemie a gagner la partie
+        if nbPuntos[0] >= 3 : #si l'ennemie a gagner la partie
             textFinal = "L'ennemie gane la partie avec "+ str(nbPuntos[0]) + " puntos"
             print(textFinal)
             nbPuntos[0]=0
             nbPuntos[1]=0
-        elif nbPuntos[1] == 3 : #si le joueur a gagner la partie
+        elif nbPuntos[1] >= 3 : #si le joueur a gagner la partie
             textFinal = "Le joueur gane la partie avec "+ str(nbPuntos[1]) + " puntos"
             print(textFinal)
             nbPuntos[0]=0
@@ -330,9 +332,6 @@ def SkinSelect(choicePlayer):
     destroy = False
     InterfaceMenu()
     
-    
-
-
 def InterfaceMenu():
     Interface(board,True)
     global destroy
@@ -344,10 +343,6 @@ def InterfaceMenu():
     else:
         destroy = True
         textSkin.destroy()
-        ligneV1 = canvas.create_line(200, 0, 200, 600)
-        ligneV2 = canvas.create_line(400, 0, 400, 600)
-        ligneH1 = canvas.create_line(0, 200, 600, 200)
-        ligneH2 = canvas.create_line(0, 400, 600, 400)
     global btnPlay
     global btnQuit2
     global btnSkin
@@ -391,6 +386,7 @@ UnidrillMangle = PhotoImage(file="Image/unidrill_mangle.png")
 RamonMatrice = PhotoImage(file="Image/ramon_matrice.png")
 DiscordLightThemeGrill = PhotoImage(file="Image/discord_light_theme_grill.png")
 SvastikaNotCGame = PhotoImage(file="Image/svastika_not_C_game.png")
+WAKANDACHIKEN = PhotoImage(file="Image/WAKANDA_CHIKEN.png")
 
 canvas = Canvas(screen, width=600, height=600, background='grey')
 ligneV1 = canvas.create_line(200, 0, 200, 600)
